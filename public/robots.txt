@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://funngro-revamp.example.com/sitemap.xml
