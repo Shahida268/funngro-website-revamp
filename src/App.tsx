@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import Teen from '@/pages/Teen';
 import Company from '@/pages/Company';
 import Login from '@/pages/Login';
-import Signup from '@/pages/signup';
+import CreateAccount from '@/pages/CreateAccount';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -30,7 +30,7 @@ export default function App() {
             <Route path="/" element={<Teen />} />
             <Route path="/company" element={<Company />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<CreateAccount />} />
             <Route path="*" element={<Teen />} />
           </Routes>
         </main>

@@ -25,58 +25,33 @@ export default function Navbar() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
 
     onScroll();
+
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
 
   const handleAnchor = (to: string) => {
     setOpen(false);
 
     const id = to.replace('#', '');
-    const el = document.getElementById(id);
+    const element = document.getElementById(id);
 
-    if (el) {
-      el.scrollIntoView({
+    if (element) {
+      element.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
     } else {
       window.location.assign(`/#${id}`);
     }
-  };
-
-  const renderLink = (item: NavItem) => {
-    if (item.type === 'anchor') {
-      return (
-        <button
-          key={item.label}
-          type="button"
-          onClick={() => handleAnchor(item.to)}
-          className="rounded-full px-3 py-2 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
-        >
-          {item.label}
-        </button>
-      );
-    }
-
-    return (
-      <NavLink
-        key={item.label}
-        to={item.to}
-        end={item.to === '/'}
-        className={({ isActive }) =>
-          `rounded-full px-3 py-2 text-sm font-medium transition hover:bg-brand-50 hover:text-brand-700 ${
-            isActive ? 'text-brand-700' : 'text-ink-700'
-          }`
-        }
-      >
-        {item.label}
-      </NavLink>
-    );
   };
 
   return (
@@ -91,6 +66,7 @@ export default function Navbar() {
         className="container-page flex h-16 items-center justify-between gap-4"
         aria-label="Primary"
       >
+        {/* Logo */}
         <Link
           to="/"
           className="flex items-center gap-2 whitespace-nowrap text-lg font-extrabold tracking-tight text-ink-900"
@@ -101,28 +77,58 @@ export default function Navbar() {
           funngro.
         </Link>
 
+        {/* Desktop Navigation */}
         <div className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-          {navItems.map(renderLink)}
+          {navItems.map((item) => {
+            if (item.type === 'anchor') {
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => handleAnchor(item.to)}
+                  className="rounded-full px-3 py-2 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
+                >
+                  {item.label}
+                </button>
+              );
+            }
+
+            return (
+              <NavLink
+                key={item.label}
+                to={item.to}
+                end={item.to === '/'}
+                className={({ isActive }) =>
+                  `rounded-full px-3 py-2 text-sm font-medium transition hover:bg-brand-50 hover:text-brand-700 ${
+                    isActive ? 'text-brand-700' : 'text-ink-700'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            );
+          })}
         </div>
 
+        {/* Desktop Buttons */}
         <div className="hidden items-center gap-2 lg:flex">
           <Link to="/login" className="btn-ghost">
             Login
           </Link>
 
-          {/* Changed to Signup */}
           <Link to="/signup" className="btn-primary">
             Get Started
           </Link>
         </div>
 
+        {/* Mobile Menu Button */}
         <button
           type="button"
           className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-ink-800 transition hover:bg-brand-50 lg:hidden"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="mobile-menu"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen(!open)}
         >
           {open ? (
             <X className="h-5 w-5" />
@@ -132,23 +138,28 @@ export default function Navbar() {
         </button>
       </nav>
 
+      {/* Mobile Menu */}
       {open && (
         <div
           id="mobile-menu"
           className="border-t border-ink-900/5 bg-white lg:hidden"
         >
           <div className="container-page flex flex-col gap-1 py-4">
-            {navItems.map((item) =>
-              item.type === 'anchor' ? (
-                <button
-                  key={item.label}
-                  type="button"
-                  onClick={() => handleAnchor(item.to)}
-                  className="rounded-xl px-3 py-3 text-left text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
-                >
-                  {item.label}
-                </button>
-              ) : (
+            {navItems.map((item) => {
+              if (item.type === 'anchor') {
+                return (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => handleAnchor(item.to)}
+                    className="rounded-xl px-3 py-3 text-left text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
+                  >
+                    {item.label}
+                  </button>
+                );
+              }
+
+              return (
                 <NavLink
                   key={item.label}
                   to={item.to}
@@ -161,15 +172,14 @@ export default function Navbar() {
                 >
                   {item.label}
                 </NavLink>
-              )
-            )}
+              );
+            })}
 
             <div className="mt-2 grid grid-cols-2 gap-2">
               <Link to="/login" className="btn-ghost w-full">
                 Login
               </Link>
 
-              {/* Changed to Signup */}
               <Link to="/signup" className="btn-primary w-full">
                 Get Started
               </Link>

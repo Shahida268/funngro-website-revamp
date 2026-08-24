@@ -1,8 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Mail, Lock, ArrowRight, Eye, EyeOff, Sparkles } from 'lucide-react';
+import {
+  User,
+  Mail,
+  Lock,
+  ArrowRight,
+  Eye,
+  EyeOff,
+  Sparkles,
+} from 'lucide-react';
 
-export default function Signup() {
+export default function CreateAccount() {
   const [showPassword, setShowPassword] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -14,8 +22,6 @@ export default function Signup() {
   return (
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
       <div className="container-page grid min-h-[calc(100vh-4rem)] items-center gap-10 py-16 lg:grid-cols-2">
-
-        {/* Left side */}
         <div className="hidden flex-col justify-between rounded-3xl bg-ink-900 p-10 text-white lg:flex">
           <div>
             <Link to="/" className="flex items-center gap-2 text-lg font-extrabold">
@@ -37,10 +43,8 @@ export default function Signup() {
           </div>
         </div>
 
-        {/* Signup form */}
         <div className="mx-auto w-full max-w-md">
           <div className="rounded-3xl bg-white p-8 shadow-card ring-1 ring-ink-900/5">
-
             <h1 className="text-2xl font-extrabold text-ink-900">
               Create your account
             </h1>
@@ -56,8 +60,6 @@ export default function Signup() {
             )}
 
             <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-
-              {/* Full name */}
               <div>
                 <label className="text-sm font-medium text-ink-800">
                   Full Name
@@ -65,7 +67,6 @@ export default function Signup() {
 
                 <div className="relative mt-1.5">
                   <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
-
                   <input
                     type="text"
                     required
@@ -75,7 +76,6 @@ export default function Signup() {
                 </div>
               </div>
 
-              {/* Email */}
               <div>
                 <label className="text-sm font-medium text-ink-800">
                   Email
@@ -83,7 +83,6 @@ export default function Signup() {
 
                 <div className="relative mt-1.5">
                   <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
-
                   <input
                     type="email"
                     required
@@ -93,7 +92,6 @@ export default function Signup() {
                 </div>
               </div>
 
-              {/* Password */}
               <div>
                 <label className="text-sm font-medium text-ink-800">
                   Password
@@ -113,6 +111,7 @@ export default function Signup() {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-ink-400"
+                    aria-label="Toggle password visibility"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -138,7 +137,6 @@ export default function Signup() {
                 Login
               </Link>
             </p>
-
           </div>
         </div>
       </div>
